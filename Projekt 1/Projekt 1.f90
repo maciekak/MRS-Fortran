@@ -17,7 +17,16 @@
     implicit none
 
     ! Variables
-
+	character (10) :: param
+	integer (kind = 8) :: i, N
+	
+	
+	call GET_COMMAND_ARGUMENT(1, param)
+	! https://gcc.gnu.org/onlinedocs/gfortran/ICHAR.html
+	read(param, '(I10)') N
+	
+	
+	
     ! Body of Projekt1
     print *, 'Hello World'
 
