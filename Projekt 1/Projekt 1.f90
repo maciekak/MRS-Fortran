@@ -12,15 +12,20 @@
 !
 !****************************************************************************
 
-    program Projekt1
+#ifndef PRECISION
+#define PRECISION 16
+#endif
 
+ program Projekt1
+	use gauss_elimination
     implicit none
 
     ! Variables
 	character (10) :: param
 	integer (kind = 8) :: i, N
-	real (kind = 16), allocatable :: A(:, :), X(:)
-	real (kind = 16) :: h
+	real (kind = PRECISION), allocatable :: A(:, :), X(:)
+	real (kind = 16) :: error_sum
+	real (kind = PRECISION) :: h
 	
 	
 	
@@ -30,7 +35,7 @@
 	
 	! allocation
 	h = 1. / N
-	allocate(A(N-1, N))
+	allocate(A(N, N))
 	allocate(X(N))
 	
 	A(:, :) = 0
@@ -52,9 +57,15 @@
 	end do
 	
 	
+	call eliminate(A, X, N)
 	
-    ! Body of Projekt1
-    print *, 'Hello World'
+	error_sum = 0
+	do i = 1, N
+		error_sum = error_sum + abs(X(i) - real(i) / real(N))
+	end do
+	
+	print *, error_sum
+	! print *, X
 
     end program Projekt1
 
